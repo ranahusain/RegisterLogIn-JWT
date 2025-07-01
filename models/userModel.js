@@ -8,11 +8,11 @@ const userSchema = new Schema({
     maxlength: 50,
   },
   email: {
-    type: Number,
+    type: String,
     required: true,
   },
   password: {
-    type: Number,
+    type: String,
   },
   token: {
     type: String,
