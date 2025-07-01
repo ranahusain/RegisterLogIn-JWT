@@ -6,6 +6,7 @@ const User = require("./models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const auth = require("./middleware/auth");
 
 const PORT = 3000;
 
@@ -114,6 +115,10 @@ app.post("/login", async (req, res) => {
 app.get("/", (req, res) => {
   console.log("Inside home page route handler");
   res.send("Welcome");
+});
+
+app.get("/dashboard", auth, (req, res) => {
+  res.send("Welcom to dashboard");
 });
 
 app.use((err, req, res, next) => {
