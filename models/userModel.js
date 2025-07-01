@@ -7,12 +7,16 @@ const userSchema = new Schema({
     required: true,
     maxlength: 50,
   },
-  age: {
+  email: {
     type: Number,
     required: true,
   },
-  weight: {
+  password: {
     type: Number,
+  },
+  token: {
+    type: String,
+    default: null,
   },
   createdAt: {
     type: Date,
