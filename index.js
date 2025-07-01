@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const connectDB = require("./db");
 const users = require("./routes/users");
-const User = require("../models/userModel");
+const User = require("./models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -67,7 +67,7 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     //validation
-    if (!email && !password) {
+    if (!(email && password)) {
       res.status(400).send("all feilds required");
     }
 
@@ -92,6 +92,18 @@ app.post("/login", async (req, res) => {
       user.password = undefined;
 
       //send token in user Cookie
+      //cookie section
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        httpOnly: true, //by this only Server Side can Manipulate the Cookie
+      };
+      res.status(200).cookie("token", token, options).json({
+        success: true,
+        token,
+        user,
+      });
+
+      // res.status(200).cookie("name of cookie", value its going to take, with that send option);
     }
     //send a token
   } catch (error) {
